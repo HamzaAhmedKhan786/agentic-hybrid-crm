@@ -1,0 +1,5 @@
+HSK-Group Proprietary License
+
+Copyright © 2026 HSK-Group. All rights reserved.
+
+Orbit CRM is a proprietary product of HSK-Group. Copying, modification, distribution, sublicensing, resale, third-party hosting, or derivative works require prior written authorization from HSK-Group. Third-party dependencies remain subject to their respective licenses.

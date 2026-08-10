@@ -17,6 +17,12 @@ The application is production-oriented, but launch is conditional on the owner c
 
 Orbit is an independent, multi-workspace CRM connected to Autonomous Sales Prospector (ASP). PostgreSQL is the operational source of truth. Groq agents retrieve context and propose structured actions; deterministic PostgreSQL policies, human approvals and immutable audits control mutations.
 
+## Product workflow and agent orchestration
+
+Orbit CRM v1.0.0 includes an in-app **How it works** guide, a governed orchestrator, and workspace-scoped support tickets. ASP handles external prospect discovery, evidence, and draft creation. After human review, Orbit CRM handles deduplication, ownership, qualification, pipeline, consent, sequences, approvals, and reporting. The orchestrator deterministically selects the appropriate specialist; proposed writes remain subject to approval policy and audit trails.
+
+Orbit CRM is proprietary software of HSK-Group. See [LICENSE.md](LICENSE.md).
+
 ## Product surface
 
 - Responsive web app: dashboard, accounts, contacts, leads, pipeline, activities, sequences, agents, approvals, knowledge, integrations, team, audit/privacy and settings.

@@ -1,0 +1,2 @@
+import {describe,expect,it} from "vitest";import {orchestrate} from "../src/orchestrator.js";
+describe("agent orchestrator",()=>{it("routes pipeline objectives",()=>expect(orchestrate("Which deals are at risk this quarter?").primary).toBe("pipeline"));it("adds research before email",()=>expect(orchestrate("Draft an email to this prospect").collaborators).toContain("research"));it("marks governed writes for approval",()=>expect(orchestrate("Score this lead").requiresApproval).toBe(true));});
