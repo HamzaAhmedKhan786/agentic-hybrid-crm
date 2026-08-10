@@ -1,0 +1,5 @@
+import { sql } from "./db.js";
+import { chunkText } from "./chunking.js";
+
+export async function ingestDocument(organizationId:string,title:string,content:string,sourceUri:string|undefined,userId?:string){return sql.begin(async tx=>{const [doc]=await tx`insert into knowledge.documents(organization_id,title,content,source_uri,created_by) values(${organizationId},${title},${content},${sourceUri||null},${userId||null}) returning id,title,created_at`;const chunks=chunkText(content);for(let i=0;i<chunks.length;i++)await tx`insert into knowledge.chunks(organization_id,document_id,chunk_index,content) values(${organizationId},${doc.id},${i},${chunks[i]})`;return{...doc,chunkCount:chunks.length};});}
+export async function retrieveKnowledge(organizationId:string,query:string,limit=6){return sql`select c.id,c.content,d.title,d.source_uri,ts_rank_cd(c.search_vector,websearch_to_tsquery('english',${query})) rank from knowledge.chunks c join knowledge.documents d on d.id=c.document_id where c.organization_id=${organizationId} and c.search_vector @@ websearch_to_tsquery('english',${query}) order by rank desc limit ${limit}`;}

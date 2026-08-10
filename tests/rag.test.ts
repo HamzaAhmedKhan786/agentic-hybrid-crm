@@ -1,0 +1,2 @@
+import { describe,expect,it } from "vitest";import { chunkText } from "../src/chunking.js";
+describe("RAG chunking",()=>{it("chunks long content with bounded overlap",()=>{const chunks=chunkText("word ".repeat(600),200,30);expect(chunks.length).toBeGreaterThan(5);expect(chunks.every(x=>x.length<=200)).toBe(true)});it("does not create empty chunks",()=>expect(chunkText("   useful evidence   ")).toEqual(["useful evidence"]));});

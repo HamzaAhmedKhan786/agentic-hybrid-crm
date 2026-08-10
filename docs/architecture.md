@@ -1,21 +1,49 @@
 # Architecture
 
-## System boundaries
+```mermaid
+flowchart LR
+  U["CRM users"] --> UI["Orbit web app"]
+  ASP["Autonomous Sales Prospector"] --> API["Fastify API"]
+  UI --> API
+  API --> PG[("PostgreSQL 18")]
+  API --> GROQ["Groq models"]
+  API --> TAVILY["Tavily research"]
+  API --> MCP["MCP tools"]
+  PG --> W["Job and outbox worker"]
+  W --> EMAIL["Email provider"]
+  W --> SF["Snowflake / analytics"]
+```
 
-- ASP owns external prospect research, evidence gathering and personalized draft generation.
-- CRM owns customer identity, account/contact truth, pipelines, activities, assignments and workflow execution.
-- Snowflake receives asynchronous analytical copies; it is never on the transactional write path.
+ASP owns external research and draft generation. CRM owns customer truth, pipeline, activity, governance and workflow execution. Snowflake is analytical and never on the transactional write path.
 
-## Hybrid decision model
+## Governed agent flow
 
-1. Events enter the transactional outbox in the same PostgreSQL transaction as the domain mutation.
-2. Deterministic rules evaluate typed facts and produce allowed actions.
-3. Agents may produce recommendations with evidence and confidence, never direct SQL.
-4. Approval policy decides whether a recommendation can be auto-approved, needs human review or must be rejected.
-5. A guarded stored procedure executes only an approved, allowlisted action.
+```mermaid
+sequenceDiagram
+  actor User
+  participant API
+  participant DB as PostgreSQL
+  participant LLM as Groq
+  User->>API: Objective and agent type
+  API->>DB: Create run and retrieve scoped evidence
+  API->>LLM: Policy, facts and untrusted evidence
+  LLM-->>API: Answer and recommendations
+  API->>DB: Store steps, usage and pending actions
+  API-->>User: Grounded answer and citations
+  User->>API: Approve
+  API->>DB: Execute allowlisted procedure, audit, outbox
+```
 
-## Integration
+## RAG and MCP
 
-ASP uses `POST /api/v1/asp/prospects` with an organization ID, idempotency key, correlation ID and shared-secret authentication. CRM returns stable account/contact/lead identifiers. Replays return the original result.
+```mermaid
+flowchart TD
+  D["Document"] --> C["Normalize and chunk"] --> K[("knowledge.chunks")]
+  Q["Question"] --> R["Workspace retrieval"]
+  K --> R --> P["Grounded prompt"] --> A["Answer + citations"]
+  M["MCP tools/list or tools/call"] --> T["Tool registry"]
+  T --> READ["Scoped read"]
+  T --> WRITE["Recommendation + approval"]
+```
 
-Snowflake integration consumes `integration.outbox_events` or CDC. Semantic views expose organization-scoped account, pipeline, activity and agent-effectiveness facts.
+Agents never receive database credentials, emit direct SQL or execute arbitrary writes. Write tools become recommendations; stored procedures enforce the allowlist.

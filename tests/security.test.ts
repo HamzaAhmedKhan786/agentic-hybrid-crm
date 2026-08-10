@@ -1,0 +1,2 @@
+import { describe,expect,it } from "vitest";import { hashPassword,hashToken,verifyPassword } from "../src/security.js";
+describe("security",()=>{it("hashes and verifies passwords",()=>{const stored=hashPassword("correct horse battery staple");expect(stored).not.toContain("correct horse");expect(verifyPassword("correct horse battery staple",stored)).toBe(true);expect(verifyPassword("wrong",stored)).toBe(false)});it("produces stable token hashes",()=>expect(hashToken("token")).toBe(hashToken("token")));});
