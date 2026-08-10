@@ -1,0 +1,27 @@
+{
+  "name": "agentic-hybrid-crm",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.13.0" },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "db:seed": "tsx scripts/seed.ts",
+    "db:check": "tsx scripts/check-db.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "fastify": "^5.5.0",
+    "postgres": "^3.4.7",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

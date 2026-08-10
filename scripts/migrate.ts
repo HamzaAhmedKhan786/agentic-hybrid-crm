@@ -1,0 +1,4 @@
+import { readFile,readdir } from "node:fs/promises";import { resolve } from "node:path";import postgres from "postgres";
+const url=process.env.DATABASE_URL;if(!url)throw new Error("DATABASE_URL is required.");const sql=postgres(url,{max:1});
+await sql`create schema if not exists migration`;await sql`create table if not exists migration.applied_versions(version text primary key,applied_at timestamptz not null default now())`;
+const files=(await readdir(resolve("migrations"))).filter(x=>x.endsWith(".sql")).sort();for(const file of files){const [done]=await sql`select 1 from migration.applied_versions where version=${file}`;if(done)continue;const source=await readFile(resolve("migrations",file),"utf8");await sql.unsafe(source);await sql`insert into migration.applied_versions(version) values(${file})`;console.log(`applied ${file}`);}await sql.end();
