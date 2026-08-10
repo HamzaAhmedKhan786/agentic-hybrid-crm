@@ -47,3 +47,5 @@ flowchart TD
 ```
 
 Agents never receive database credentials, emit direct SQL or execute arbitrary writes. Write tools become recommendations; stored procedures enforce the allowlist.
+
+Nullable external identities use partial unique indexes, so missing email/domain values do not collide while real values remain unique within an organization.
