@@ -1,5 +1,20 @@
 # Orbit — Agentic Hybrid CRM
 
+## Production documentation
+
+- [Architecture](docs/architecture.md)
+- [End-to-end ASP, agent, RAG and MCP flows](docs/flows.md)
+- [Agent catalog and governance](docs/agents.md)
+- [API reference](docs/api.md)
+- [Configuration reference](docs/configuration.md)
+- [Deployment and operations](docs/production.md)
+- [Security model](docs/security.md)
+- [Privacy runbook](docs/privacy.md)
+- [Production owner checklist](docs/owner-checklist.md)
+- [Local operations runbook](docs/runbook.md)
+
+The application is production-oriented, but launch is conditional on the owner checklist. Managed infrastructure, credentials, vendor/legal choices, external-service validation, monitoring, backup restore, security review and privacy approval cannot be completed by source code alone.
+
 Orbit is an independent, multi-workspace CRM connected to Autonomous Sales Prospector (ASP). PostgreSQL is the operational source of truth. Groq agents retrieve context and propose structured actions; deterministic PostgreSQL policies, human approvals and immutable audits control mutations.
 
 ## Product surface

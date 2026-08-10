@@ -15,4 +15,5 @@ COPY --from=build /app/migrations ./migrations
 COPY --from=build /app/package.json ./package.json
 EXPOSE 4100
 USER node
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 CMD wget -qO- http://127.0.0.1:4100/health >/dev/null || exit 1
 CMD ["node","dist/src/server.js"]
