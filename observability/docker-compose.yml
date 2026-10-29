@@ -1,0 +1,17 @@
+services:
+  prometheus:
+    image: prom/prometheus:v3.7.3
+    command: ["--config.file=/etc/prometheus/prometheus.yml"]
+    ports: ["9090:9090"]
+    volumes: ["./prometheus.yml:/etc/prometheus/prometheus.yml:ro"]
+    restart: unless-stopped
+  grafana:
+    image: grafana/grafana:12.2.1
+    ports: ["3005:3000"]
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-change-me}
+    volumes: ["grafana-data:/var/lib/grafana"]
+    restart: unless-stopped
+volumes:
+  grafana-data: {}

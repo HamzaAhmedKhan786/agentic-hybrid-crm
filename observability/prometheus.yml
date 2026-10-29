@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 15s
+scrape_configs:
+  - job_name: orbit-crm
+    static_configs:
+      - targets: ["host.docker.internal:4100"]
+  - job_name: autonomous-sales-prospector
+    metrics_path: /api/metrics
+    static_configs:
+      - targets: ["host.docker.internal:3001"]

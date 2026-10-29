@@ -1,6 +1,6 @@
 # Orbit — Agentic Hybrid CRM
 
-![Orbit CRM sign-in](docs/screenshots/orbit-login.png)
+![Orbit CRM command center with seeded workspace data](docs/screenshots/orbit-dashboard.png)
 
 Orbit is the governed system of record for accounts, contacts, leads, opportunities, activities, sequences, consent, agent recommendations and audits. It receives reviewed prospect intelligence from [Autonomous Sales Prospector](https://github.com/HamzaAhmedKhan786/autonomous-sales-prospector).
 
@@ -45,6 +45,7 @@ The products intentionally keep separate databases. ASP retains research history
 ## Production documentation
 
 - [Architecture](docs/architecture.md)
+- [AI product requirements](docs/PRD.md)
 - [End-to-end ASP, agent, RAG and MCP flows](docs/flows.md)
 - [Agent catalog and governance](docs/agents.md)
 - [API reference](docs/api.md)
@@ -58,6 +59,12 @@ The products intentionally keep separate databases. ASP retains research history
 The application is production-oriented, but launch is conditional on the owner checklist. Managed infrastructure, credentials, vendor/legal choices, external-service validation, monitoring, backup restore, security review and privacy approval cannot be completed by source code alone.
 
 Orbit is an independent, multi-workspace CRM connected to Autonomous Sales Prospector (ASP). PostgreSQL is the operational source of truth. Groq agents retrieve context and propose structured actions; deterministic PostgreSQL policies, human approvals and immutable audits control mutations.
+
+### AURA governed assistant
+
+AURA uses LangGraph for deterministic state and checkpoints, optional JEV TypeSafe decisions for bounded routing, specialist handoffs for CRM work, and an evaluator before returning a result. JEV is a decision model—not the conversational generator—and never replaces tenant authorization or approval policy. Langfuse/OpenTelemetry traces and Prometheus/Grafana metrics are optional operator integrations. See the [AI PRD](docs/PRD.md).
+
+![AURA governed CRM assistant](docs/screenshots/orbit-aura.png)
 
 ## Product workflow and agent orchestration
 

@@ -4,7 +4,7 @@ const recommendation = z.object({
   actionType: z.string().trim().min(1).max(80),
   targetType: z.string().trim().min(1).max(80),
   targetId: z.string().uuid().nullable().optional(),
-  payload: z.record(z.unknown()).default({}),
+  payload: z.record(z.string(),z.unknown()).default({}),
   confidence: z.coerce.number().min(0).max(1).default(0),
   rationale: z.string().trim().min(1).max(2_000),
 }).strict();
