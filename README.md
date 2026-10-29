@@ -64,6 +64,8 @@ Orbit is an independent, multi-workspace CRM connected to Autonomous Sales Prosp
 
 AURA uses LangGraph for deterministic state and checkpoints, optional JEV TypeSafe decisions for bounded routing, specialist handoffs for CRM work, and an evaluator before returning a result. JEV is a decision model—not the conversational generator—and never replaces tenant authorization or approval policy. Langfuse/OpenTelemetry traces and Prometheus/Grafana metrics are optional operator integrations. See the [AI PRD](docs/PRD.md).
 
+The AURA and SIERRA launchers use lightweight CSS animation with a reduced-motion fallback; no external animation service or tracking script is loaded.
+
 ![AURA governed CRM assistant](docs/screenshots/orbit-aura.png)
 
 ## Product workflow and agent orchestration
@@ -95,6 +97,8 @@ npm run dev
 Run `npm run worker` separately and open `http://localhost:4100`.
 
 Synthetic login: `maya.chen@example.test`; password is `BOOTSTRAP_ADMIN_PASSWORD`, or `ChangeMe123!` when omitted for local development. Change it before exposing the service. Never commit `.env`.
+
+The seed command creates realistic accounts, contacts, leads and opportunities across multiple stages, so Pipeline Health and the dashboard are populated immediately after local setup. It is idempotent and safe to rerun.
 
 ## Important endpoints
 

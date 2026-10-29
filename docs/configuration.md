@@ -10,6 +10,8 @@
 | `SESSION_TTL_HOURS` | yes | Server-session lifetime |
 | `BOOTSTRAP_ADMIN_PASSWORD` | bootstrap only | Initial provisioning; remove after setup |
 | `GROQ_API_KEY`, `GROQ_MODEL`, `GROQ_BASE_URL` | for AI | Model provider configuration |
+| `LLM_PROVIDER` | yes | `groq` for hosted inference or `local` for a loopback OpenAI-compatible runtime |
+| `LLM_BASE_URL`, `LLM_API_KEY`, `LLM_MODEL` | local inference | Local endpoint and model; remote custom endpoints are rejected |
 | `TAVILY_API_KEY`, `TAVILY_API_URL` | for web research | Search provider configuration |
 | `AGENT_ACTIONS_REQUIRE_APPROVAL` | yes | Keep `true` in production unless an action has a separately approved policy |
 | `AGENT_MAX_ACTIONS_PER_RUN` | yes | Hard bound on an agent run |
@@ -17,4 +19,6 @@
 | `SNOWFLAKE_*` | optional | Analytics destination; omit until enabled |
 
 Generate secrets with a cryptographic random generator (at least 32 bytes). Do not use `${VARIABLE}` interpolation inside Node env files; inject the final value. URL-encode reserved password characters in connection URIs. Validate startup with `/health` and never print the effective configuration.
+
+Select a fine-tuned hosted model with `GROQ_MODEL`. For Ollama or another local OpenAI-compatible runtime, use `LLM_PROVIDER=local`, a loopback URL such as `http://localhost:11434/v1`, and the installed `LLM_MODEL`. This loopback restriction prevents tenant CRM data from being redirected to an unapproved remote endpoint.
 

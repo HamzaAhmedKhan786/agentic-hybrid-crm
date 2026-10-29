@@ -1,0 +1,2 @@
+import {config} from "./config.js";
+export function llmConfiguration(){if(config.LLM_PROVIDER==="groq")return{provider:"groq",baseURL:config.GROQ_BASE_URL,apiKey:config.GROQ_API_KEY,model:config.LLM_MODEL||config.GROQ_MODEL};const baseURL=config.LLM_BASE_URL||"http://localhost:11434/v1",host=new URL(baseURL).hostname;if(!new Set(["localhost","127.0.0.1","::1"]).has(host))throw new Error("Local LLM endpoints must use a loopback hostname.");return{provider:"local",baseURL,apiKey:config.LLM_API_KEY||"local-only",model:config.LLM_MODEL||"llama3.2"};}
