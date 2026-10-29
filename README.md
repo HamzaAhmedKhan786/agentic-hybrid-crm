@@ -1,5 +1,47 @@
 # Orbit — Agentic Hybrid CRM
 
+![Orbit CRM sign-in](docs/screenshots/orbit-login.png)
+
+Orbit is the governed system of record for accounts, contacts, leads, opportunities, activities, sequences, consent, agent recommendations and audits. It receives reviewed prospect intelligence from [Autonomous Sales Prospector](https://github.com/HamzaAhmedKhan786/autonomous-sales-prospector).
+
+## How Orbit and ASP work together
+
+```mermaid
+flowchart LR
+  subgraph ASP["Autonomous Sales Prospector · discovery workspace"]
+    P["LinkedIn profile"] --> E["Licensed enrichment"]
+    E --> S["Tavily company signals"]
+    S --> D["Groq grounded draft"]
+    D --> R{"Human review"}
+    H[("SQLite research history")] --- D
+  end
+  R -->|"Approve + Sync"| API["Authenticated idempotent API"]
+  subgraph ORBIT["Orbit CRM · revenue system of record"]
+    API --> U["Deduplicate + upsert"]
+    U --> A["Account"]
+    U --> C["Contact"]
+    U --> L["Lead"]
+    L --> Q["Qualification + pipeline"]
+    Q --> O["Sequences + activities"]
+    O --> G{"Consent + human approval"}
+    G --> X["Execution + audit"]
+    DB[("PostgreSQL")] --- U
+    DB --- Q
+    DB --- X
+  end
+  X -. "status and external IDs" .-> H
+```
+
+| Data | Created in ASP | Visible in Orbit CRM |
+| --- | --- | --- |
+| Person and company identity | Profile enrichment | Contact and account |
+| Research evidence | Tavily-backed sources | Research activities with source URLs |
+| Research score | Grounded prospect result | Lead score and explanation |
+| Sync state | Provider, time and CRM lead ID | ASP integration heartbeat and CRM records |
+| Outreach draft | Human-editable draft | Governed email agent or sequence context |
+
+The products intentionally keep separate databases. ASP retains research history in SQLite; Orbit keeps operational sales data in PostgreSQL. Synchronization is explicit, tenant-scoped, authenticated with `ASP_SHARED_SECRET`, idempotent, and audited.
+
 ## Production documentation
 
 - [Architecture](docs/architecture.md)
