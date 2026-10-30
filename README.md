@@ -106,6 +106,8 @@ Synthetic login: `maya.chen@example.test`; password is `BOOTSTRAP_ADMIN_PASSWORD
 
 The seed command creates realistic accounts, contacts, leads and opportunities across multiple stages, so Pipeline Health and the dashboard are populated immediately after local setup. It is idempotent and safe to rerun.
 
+New workspaces receive an isolated set of clearly labeled synthetic starter records so the live dashboard, pipeline, and agent workflows are immediately understandable. Existing empty local workspaces can be populated idempotently with `npm run db:seed-empty`; records are never copied between tenants.
+
 ## Important endpoints
 
 - `POST /api/v1/auth/login`

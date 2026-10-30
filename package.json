@@ -12,6 +12,7 @@
     "start": "node dist/server.js",
     "db:migrate": "node --env-file=.env --import tsx scripts/migrate.ts",
     "db:seed": "node --env-file=.env --import tsx scripts/seed.ts",
+    "db:seed-empty": "node --env-file=.env --import tsx scripts/seed-empty-organizations.ts",
     "db:check": "node --env-file=.env --import tsx scripts/check-db.ts",
     "worker": "node --env-file=.env --import tsx src/worker.ts",
     "start:worker": "node dist/src/worker.js",
