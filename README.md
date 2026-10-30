@@ -70,6 +70,10 @@ AURA uses a high-resolution eight-frame transparent sprite loop for articulated 
 
 ![AURA governed CRM assistant](docs/screenshots/orbit-aura.png)
 
+### Guided ASP-to-CRM workflow
+
+![Orbit CRM How it works guide showing the complete ASP discovery, evidence sync, CRM management, agent approval, and governance flow](docs/screenshots/orbit-how-it-works.png)
+
 ## Product workflow and agent orchestration
 
 Orbit CRM v1.0.0 includes an in-app **How it works** guide, a governed orchestrator, and workspace-scoped support tickets. ASP handles external prospect discovery, evidence, and draft creation. After human review, Orbit CRM handles deduplication, ownership, qualification, pipeline, consent, sequences, approvals, and reporting. The orchestrator deterministically selects the appropriate specialist; proposed writes remain subject to approval policy and audit trails.
