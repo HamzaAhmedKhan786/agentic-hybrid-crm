@@ -66,6 +66,8 @@ AURA uses LangGraph for deterministic state and checkpoints, optional JEV TypeSa
 
 The AURA and SIERRA launchers use lightweight CSS animation with a reduced-motion fallback; no external animation service or tracking script is loaded.
 
+AURA uses a high-resolution eight-frame transparent sprite loop for articulated waving, body rotation, and orbital-light movement. The browser renders the frames directly, avoiding the color and edge artifacts of low-resolution GIF files.
+
 ![AURA governed CRM assistant](docs/screenshots/orbit-aura.png)
 
 ## Product workflow and agent orchestration
